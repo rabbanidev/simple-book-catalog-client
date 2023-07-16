@@ -20,6 +20,7 @@ export const apiSlice = createApi({
     "genreOptions",
     "publicationYears",
     "wishlist",
+    "readingList",
   ],
   endpoints: () => ({}),
 });

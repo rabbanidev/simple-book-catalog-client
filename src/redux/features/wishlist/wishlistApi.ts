@@ -6,7 +6,7 @@ const wishlistApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getWishList: builder.query<IResponse<IWishList[]>, undefined>({
       query: () => ({
-        url: "wishlist",
+        url: "/wishlist",
       }),
       providesTags: ["wishlist"],
     }),

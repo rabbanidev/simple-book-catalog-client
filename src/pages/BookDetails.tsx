@@ -14,6 +14,7 @@ import EditButton from "../components/ui/EditButton";
 import DeleteButton from "../components/ui/DeleteButton";
 import errorHandler from "../utils/errorHandler";
 import WishlistButton from "../components/ui/WishlistButton";
+import ReadingListButton from "../components/ui/ReadingListButton";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -78,6 +79,7 @@ const BookDetails = () => {
           )}
           <div className="mt-4 flex gap-x-5">
             <WishlistButton id={id!} />
+            <ReadingListButton id={id!} />
           </div>
         </div>
         <div className="col-span-1">

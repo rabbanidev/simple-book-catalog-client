@@ -8,6 +8,7 @@ import AddBook from "./pages/AddBook";
 import useAuthCheck from "./hooks/useAuthCheck";
 import EditBook from "./pages/EditBook";
 import WishList from "./pages/WishList";
+import ReadingList from "./pages/ReadingList";
 
 function App() {
   const authCheck = useAuthCheck();
@@ -22,6 +23,7 @@ function App() {
         <Route path="/books" element={<AllBooks />} />
 
         <Route path="/wishlist" element={<WishList />} />
+        <Route path="/reading-list" element={<ReadingList />} />
 
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
