@@ -13,6 +13,7 @@ import { useAppSelector } from "../redux/app/hooks";
 import EditButton from "../components/ui/EditButton";
 import DeleteButton from "../components/ui/DeleteButton";
 import errorHandler from "../utils/errorHandler";
+import WishlistButton from "../components/ui/WishlistButton";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -75,6 +76,9 @@ const BookDetails = () => {
               <DeleteButton handler={() => deleteHandler(id as string)} />
             </div>
           )}
+          <div className="mt-4 flex gap-x-5">
+            <WishlistButton id={id!} />
+          </div>
         </div>
         <div className="col-span-1">
           <Review id={id!} />

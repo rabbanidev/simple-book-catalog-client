@@ -10,7 +10,7 @@ const reviewsApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["reviews"],
     }),
-    createReviw: builder.mutation<IResponse<IReview[]>, object>({
+    createReviw: builder.mutation<IResponse<IReview>, object>({
       query: ({ id, data }: { id: string; data: object }) => ({
         url: `/reviews/${id}`,
         body: data,

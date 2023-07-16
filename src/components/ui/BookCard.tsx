@@ -3,13 +3,6 @@ import { IBook } from "../../redux/features/books/booksInterface";
 
 type IProps = {
   book: IBook;
-  //  {
-  //   id: string;
-  //   title: string;
-  //   author: string;
-  //   genre: string;
-  //   publicationDate: Date;
-  // };
 };
 
 const BookCard = ({ book }: IProps) => {
