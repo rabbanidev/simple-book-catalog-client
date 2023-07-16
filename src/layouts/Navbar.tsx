@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import Menu from "../icon/Menu";
-import { useAppSelector } from "../redux/app/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import { userLoggedOut } from "../redux/features/auth/authSlice";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
-  const logoutHandler = () => {};
+  const logoutHandler = () => {
+    localStorage.removeItem("auth");
+    dispatch(userLoggedOut());
+  };
 
   return (
     <nav className="bg-white border-gray-200 border-b">

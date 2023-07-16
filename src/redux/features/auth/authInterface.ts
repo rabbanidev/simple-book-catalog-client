@@ -4,6 +4,6 @@ export type IAuth = {
   };
 };
 
-export type IPayloadAction = {
-  accessToken: string;
+export type IAuthResponse = {
+  accessToken: string | null;
 };

@@ -93,7 +93,7 @@ const SigninForm = () => {
         className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto"
         disabled={isLoading}
       >
-        Login to your account
+        {isLoading ? "loading..." : "Login to your account"}
       </button>
 
       {isError && <Error message={error?.data?.message || error?.error} />}

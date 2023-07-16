@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../ui/Input";
 import Error from "../ui/Error";
+import { useEffect } from "react";
+import { useAppSelector } from "../../redux/app/hooks";
+import { useSignupMutation } from "../../redux/features/auth/authApi";
 
 interface LoginFormInputs {
   email: string;
@@ -20,6 +24,10 @@ const schema = yup
   .required();
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAppSelector((state) => state.auth);
+  const [signup, { isLoading, isError, error }] = useSignupMutation();
   const {
     register,
     handleSubmit,
@@ -28,10 +36,18 @@ const SignupForm = () => {
     resolver: yupResolver(schema),
   });
 
+  const from = location?.state?.from?.pathname || "/";
   const { email, password } = errors;
 
+  useEffect(() => {
+    if (user.accessToken) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, user.accessToken]);
+
   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log(data);
+    const payload = { email: data.email, password: data.password };
+    signup(payload);
   };
 
   return (
@@ -76,9 +92,13 @@ const SignupForm = () => {
       <button
         type="submit"
         className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto"
+        disabled={isLoading}
       >
-        Create an Account
+        {isLoading ? "Loading..." : "Create an Account"}
       </button>
+
+      {isError && <Error message={error?.data?.message || error?.error} />}
+
       <div className="text-sm font-medium text-gray-900">
         Already register?{" "}
         <Link to="/signin" className="text-blue-600 hover:underline">

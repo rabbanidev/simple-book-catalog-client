@@ -16,7 +16,7 @@ const Signup = () => {
             </p>
           </div>
           <div className="col-span-2 w-full p-6 space-y-8 bg-white rounded-lg sm:p-8 md:col-span-1 lg:max-w-xl">
-            <h2 className="text-2xl font-bold text-gray-900">Sign in</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Sign up</h2>
             <SignupForm />
           </div>
         </div>
