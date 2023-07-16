@@ -5,18 +5,23 @@ import Signup from "./pages/Signup";
 import AllBooks from "./pages/AllBooks";
 import BookDetails from "./pages/BookDetails";
 import AddBook from "./pages/AddBook";
+import useAuthCheck from "./hooks/useAuthCheck";
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/books/add-book" element={<AddBook />} />
-      <Route path="/books/:id" element={<BookDetails />} />
+  const authCheck = useAuthCheck();
 
-      <Route path="/books" element={<AllBooks />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/signup" element={<Signup />} />
-    </Routes>
+  return (
+    authCheck && (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/books/add-book" element={<AddBook />} />
+        <Route path="/books/:id" element={<BookDetails />} />
+
+        <Route path="/books" element={<AllBooks />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    )
   );
 }
 

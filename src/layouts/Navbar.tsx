@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import Menu from "../icon/Menu";
+import { useAppSelector } from "../redux/app/hooks";
 
 const Navbar = () => {
-  const user = true;
+  const { user } = useAppSelector((state) => state.auth);
+
+  const logoutHandler = () => {};
 
   return (
     <nav className="bg-white border-gray-200 border-b">
@@ -32,19 +35,18 @@ const Navbar = () => {
                 All Books
               </Link>
             </li>
-            {user && (
-              <>
-                <li>
-                  <button
-                    type="button"
-                    className="mt-2 block w-full rounded text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium  text-sm px-8 py-2 md:mt-0 md:rounded-full"
-                  >
-                    Sign Out
-                  </button>
-                </li>
-              </>
+            {user.accessToken && (
+              <li>
+                <button
+                  type="button"
+                  className="mt-2 block w-full rounded text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium  text-sm px-8 py-2 md:mt-0 md:rounded-full"
+                  onClick={logoutHandler}
+                >
+                  Sign Out
+                </button>
+              </li>
             )}
-            {!user && (
+            {!user.accessToken && (
               <li>
                 <Link
                   to="/signin"
