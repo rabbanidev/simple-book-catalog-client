@@ -5,3 +5,11 @@ export type IBook = {
   genre: string;
   publicationDate: Date;
 };
+
+export type IBooksGetUrlPayload = {
+  page: string;
+  limit: number;
+  searchTerm: string;
+  genre: string;
+  publicationYear: number;
+};

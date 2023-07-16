@@ -1,6 +1,6 @@
 import { IResponse } from "../../../interface/generic";
 import apiSlice from "../api/apiSlice";
-import type { IBook } from "./booksInterface";
+import type { IBook, IBooksGetUrlPayload } from "./booksInterface";
 
 const booksApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,13 +11,7 @@ const booksApi = apiSlice.injectEndpoints({
         searchTerm,
         genre,
         publicationYear,
-      }: {
-        page: string;
-        limit: number;
-        searchTerm: string;
-        genre: string;
-        publicationYear: number;
-      }) => {
+      }: IBooksGetUrlPayload) => {
         let url = `/books?page=${page}&limit=${limit}`;
         if (searchTerm) {
           url += `&searchTerm=${searchTerm}`;
@@ -34,8 +28,13 @@ const booksApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    getBook: builder.query<IResponse<IBook>, string>({
+      query: (id) => ({
+        url: `/books/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetBooksQuery } = booksApi;
+export const { useGetBooksQuery, useGetBookQuery } = booksApi;
 export default booksApi;

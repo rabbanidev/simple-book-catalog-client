@@ -1,30 +1,54 @@
+import { useParams } from "react-router-dom";
 import Review from "../components/Review";
 import Layout from "../layouts/Layout";
+import Error from "../components/ui/Error";
+import BookDetailsLoader from "../components/ui/loader/BookDetailsLoader";
+import { useGetBookQuery } from "../redux/features/books/booksApi";
 
 const BookDetails = () => {
-  return (
-    <Layout>
+  const { id } = useParams();
+  const { isLoading, isError, error, data } = useGetBookQuery(id as string);
+
+  // Decide what to render
+  let content = null;
+  if (isLoading) {
+    content = <BookDetailsLoader />;
+  } else if (!isLoading && isError) {
+    content = (
+      <div className="mt-10">
+        <Error message={error?.data?.message || error?.error} />
+      </div>
+    );
+  } else if (!isLoading && !isError && data?.data) {
+    const { author, title, genre, publicationDate } = data.data;
+    const year = new Date(publicationDate).getFullYear();
+    content = (
       <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">
         <div className="col-span-1">
           <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-900 md:text-3xl">
-            Noteworthy technology acquisitions 2021
+            {title}
           </h5>
           <p className="mb-2 font-medium text-gray-800 text-xl">
-            <span className="font-semibold">Author: </span>Jhon Dhoe
+            <span className="font-semibold">Author: </span>
+            {author}
           </p>
           <p className="mb-2 font-medium text-gray-800 text-xl">
-            <span className="font-semibold">Genre: </span>Novel
+            <span className="font-semibold">Genre: </span>
+            {genre}
           </p>
           <p className="font-medium text-gray-800 text-xl">
-            <span className="font-semibold">Publication year: </span>2023
+            <span className="font-semibold">Publication year: </span>
+            {year}
           </p>
         </div>
         <div className="col-span-1">
           <Review />
         </div>
       </div>
-    </Layout>
-  );
+    );
+  }
+
+  return <Layout>{content}</Layout>;
 };
 
 export default BookDetails;
