@@ -5,6 +5,7 @@ import { useGetBooksQuery } from "../redux/features/books/booksApi";
 import CardLoader from "../components/ui/loader/CardLoader";
 import Error from "../components/ui/Error";
 import { IBook } from "../redux/features/books/booksInterface";
+import errorHandler from "../utils/errorHandler";
 
 const Home = () => {
   const { isLoading, isError, error, data } = useGetBooksQuery({
@@ -27,7 +28,7 @@ const Home = () => {
   } else if (!isLoading && isError) {
     content = (
       <div className="mt-4">
-        <Error message={error?.data?.message || error?.error} />
+        <Error message={errorHandler(error)} />
       </div>
     );
   } else if (!isLoading && !isError && data?.data?.length! > 0) {

@@ -11,9 +11,9 @@ export type IBook = {
 };
 
 export type IBooksGetUrlPayload = {
-  page: string;
-  limit: number;
-  searchTerm: string;
-  genre: string;
-  publicationYear: number;
+  page?: number;
+  limit?: number;
+  searchTerm?: string | null;
+  genre?: string | null;
+  publicationYear?: number | null;
 };

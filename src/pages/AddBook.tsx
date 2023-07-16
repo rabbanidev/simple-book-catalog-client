@@ -3,9 +3,10 @@ import Error from "../components/ui/Error";
 import Layout from "../layouts/Layout";
 import { useCreateBookMutation } from "../redux/features/books/booksApi";
 import { IBook } from "../redux/features/books/booksInterface";
+import errorHandler from "../utils/errorHandler";
 
 const AddBook = () => {
-  const [createBook, { isError, isLoading, isSuccess, error, data }] =
+  const [createBook, { isError, isLoading, isSuccess, error }] =
     useCreateBookMutation();
 
   const defaultValues: IBook = {
@@ -31,7 +32,7 @@ const AddBook = () => {
         isSuccess={isSuccess}
         createHandler={createHandler}
       />
-      {isError && <Error message={error?.data?.message || error?.error} />}
+      {isError && <Error message={errorHandler(error)} />}
     </Layout>
   );
 };

@@ -12,6 +12,7 @@ import { IBook } from "../redux/features/books/booksInterface";
 import { useState } from "react";
 import Pagination from "../components/Pagination";
 import { useAppSelector } from "../redux/app/hooks";
+import errorHandler from "../utils/errorHandler";
 
 const AllBooks = () => {
   const [page, setPage] = useState<number>(1);
@@ -52,7 +53,7 @@ const AllBooks = () => {
   } else if (!isLoading && isError) {
     content = (
       <div className="mt-4">
-        <Error message={error?.data?.message || error?.error} />
+        <Error message={errorHandler(error)} />
       </div>
     );
   } else if (!isLoading && !isError && data?.data?.length! > 0) {
@@ -98,7 +99,7 @@ const AllBooks = () => {
           <Pagination
             page={page}
             increaseDisabled={
-              data.meta.limit * data.meta.page >= data.meta.total
+              data?.meta && data.meta.limit * data.meta.page >= data.meta.total
             }
             increase={increaseHandler}
             decrease={decreaseHandler}

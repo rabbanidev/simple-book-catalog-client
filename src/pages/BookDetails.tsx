@@ -7,6 +7,7 @@ import { useGetBookQuery } from "../redux/features/books/booksApi";
 import { useAppSelector } from "../redux/app/hooks";
 import EditButton from "../components/ui/EditButton";
 import DeleteButton from "../components/ui/DeleteButton";
+import errorHandler from "../utils/errorHandler";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const BookDetails = () => {
   } else if (!isLoading && isError) {
     content = (
       <div className="mt-10">
-        <Error message={error?.data?.message || error?.error} />
+        <Error message={errorHandler(error)} />
       </div>
     );
   } else if (!isLoading && !isError && data?.data) {
@@ -50,7 +51,7 @@ const BookDetails = () => {
             <span className="font-semibold">Publication year: </span>
             {year}
           </p>
-          {user.id === productUser.id && (
+          {user.id === productUser?.id && (
             <div className="mt-4 flex gap-x-3">
               <EditButton path="" />
               <DeleteButton />

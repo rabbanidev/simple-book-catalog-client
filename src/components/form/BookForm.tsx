@@ -128,7 +128,6 @@ const BookForm = ({
           id="publicationDate"
           placeholder="publication date"
           type="date"
-          // value={defaultValues.publicationDate}
           {...register("publicationDate")}
         />
         <Error message={publicationDate?.message!} />

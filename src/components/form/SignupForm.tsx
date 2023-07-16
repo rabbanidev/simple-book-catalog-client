@@ -10,6 +10,7 @@ import Error from "../ui/Error";
 import { useEffect } from "react";
 import { useAppSelector } from "../../redux/app/hooks";
 import { useSignupMutation } from "../../redux/features/auth/authApi";
+import errorHandler from "../../utils/errorHandler";
 
 interface LoginFormInputs {
   email: string;
@@ -97,7 +98,7 @@ const SignupForm = () => {
         {isLoading ? "Loading..." : "Create an Account"}
       </button>
 
-      {isError && <Error message={error?.data?.message || error?.error} />}
+      {isError && <Error message={errorHandler(error)} />}
 
       <div className="text-sm font-medium text-gray-900">
         Already register?{" "}

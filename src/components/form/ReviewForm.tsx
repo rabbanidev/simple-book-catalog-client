@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import * as yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -5,6 +6,7 @@ import Input from "../ui/Input";
 import Error from "../ui/Error";
 import { useCreateReviwMutation } from "../../redux/features/reviews/reviewsApi";
 import { useEffect } from "react";
+import errorHandler from "../../utils/errorHandler";
 
 interface ReviewFormInputs {
   text: string;
@@ -68,7 +70,7 @@ const ReviewForm = ({ id }: IProps) => {
         </button>
       </div>
 
-      {isError && <Error message={error?.data?.message || error?.error} />}
+      {isError && <Error message={errorHandler(error)} />}
     </form>
   );
 };

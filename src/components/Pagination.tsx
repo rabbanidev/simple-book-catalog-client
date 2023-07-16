@@ -3,7 +3,7 @@ import Prev from "../icon/Prev";
 
 type IProps = {
   page: number;
-  increaseDisabled: boolean;
+  increaseDisabled: boolean | undefined;
   increase: () => void;
   decrease: () => void;
 };
