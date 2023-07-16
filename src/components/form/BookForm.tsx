@@ -1,20 +1,26 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import * as yup from "yup";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, SubmitHandler, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../ui/Input";
 import Error from "../ui/Error";
+import { IBook } from "../../redux/features/books/booksInterface";
 
 interface BookFormInputs {
   title: string;
   author: string;
   genre: string;
-  publicationDate: Date;
+  publicationDate: Date | string;
 }
 
 interface IProps {
   btnText: string;
+  defaultValues: IBook;
+  isLoading: boolean;
+  isSuccess: boolean;
+  createHandler: (book: IBook) => void;
 }
 
 const schema = yup
@@ -26,19 +32,39 @@ const schema = yup
   })
   .required();
 
-const BookForm = ({ btnText }: IProps) => {
+const BookForm = ({
+  btnText,
+  defaultValues,
+  isLoading,
+  isSuccess,
+  createHandler,
+}: IProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<BookFormInputs>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as Resolver<BookFormInputs, object>,
+    defaultValues: defaultValues,
   });
 
   const { title, author, genre, publicationDate } = errors;
 
+  useEffect(() => {
+    if (isSuccess) {
+      reset();
+    }
+  }, [isSuccess, reset]);
+
   const onSubmit: SubmitHandler<BookFormInputs> = (data) => {
-    console.log(data);
+    const bookPayload: IBook = {
+      title: data.title,
+      author: data.author,
+      genre: data.genre,
+      publicationDate: data.publicationDate,
+    };
+    createHandler(bookPayload);
   };
 
   return (
@@ -102,6 +128,7 @@ const BookForm = ({ btnText }: IProps) => {
           id="publicationDate"
           placeholder="publication date"
           type="date"
+          // value={defaultValues.publicationDate}
           {...register("publicationDate")}
         />
         <Error message={publicationDate?.message!} />
@@ -110,8 +137,9 @@ const BookForm = ({ btnText }: IProps) => {
       <button
         type="submit"
         className="w-full px-5 py-2 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto"
+        disabled={isLoading}
       >
-        {btnText}
+        {isLoading ? "Loading..." : btnText}
       </button>
     </form>
   );

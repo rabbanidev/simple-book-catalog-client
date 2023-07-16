@@ -1,10 +1,10 @@
 export type IBook = {
-  id: string;
+  id?: string;
   title: string;
   author: string;
   genre: string;
-  publicationDate: Date;
-  user: {
+  publicationDate: Date | string;
+  user?: {
     id: string;
     email: string;
   };
