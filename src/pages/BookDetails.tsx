@@ -58,7 +58,7 @@ const BookDetails = () => {
           )}
         </div>
         <div className="col-span-1">
-          <Review />
+          <Review id={id!} />
         </div>
       </div>
     );

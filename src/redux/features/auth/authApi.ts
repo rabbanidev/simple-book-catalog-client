@@ -1,6 +1,6 @@
 import { IResponse } from "../../../interface/generic";
 import apiSlice from "../api/apiSlice";
-import { IAuthResponse, IMyProfile } from "./authInterface";
+import { IAuthResponse, IUser } from "./authInterface";
 import { myProfile, userLoggedIn } from "./authSlice";
 
 const authApi = apiSlice.injectEndpoints({
@@ -37,7 +37,7 @@ const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    myProfile: builder.query<IResponse<IMyProfile>, undefined>({
+    myProfile: builder.query<IResponse<IUser>, undefined>({
       query: () => ({
         url: "/users/my-profile",
       }),

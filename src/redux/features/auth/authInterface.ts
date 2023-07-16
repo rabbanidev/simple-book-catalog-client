@@ -9,7 +9,7 @@ export type IAuthResponse = {
   accessToken: string | null;
 };
 
-export type IMyProfile = {
+export type IUser = {
   id: string;
   email?: string;
 };

@@ -8,6 +8,6 @@ export type IResponse<T> = {
   statusCode: number;
   success: boolean;
   message: string;
-  meta: IMeta;
+  meta?: IMeta;
   data: T;
 };

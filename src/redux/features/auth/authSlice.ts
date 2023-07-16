@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { IAuth, IAuthResponse, IMyProfile } from "./authInterface";
+import type { IAuth, IAuthResponse, IUser } from "./authInterface";
 
 const initialState: IAuth = {
   user: {
@@ -16,7 +16,7 @@ const authSlice = createSlice({
     userLoggedIn: (state, action: PayloadAction<IAuthResponse>) => {
       state.user.accessToken = action.payload?.accessToken as string;
     },
-    myProfile: (state, action: PayloadAction<IMyProfile>) => {
+    myProfile: (state, action: PayloadAction<IUser>) => {
       state.user.id = action.payload?.id as string;
     },
     userLoggedOut: (state) => {
