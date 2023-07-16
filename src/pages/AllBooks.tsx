@@ -10,14 +10,20 @@ import Error from "../components/ui/Error";
 import { IBook } from "../redux/features/books/booksInterface";
 import { useState } from "react";
 import Pagination from "../components/Pagination";
+import { useAppSelector } from "../redux/app/hooks";
 
 const AllBooks = () => {
   const [page, setPage] = useState<number>(1);
+  const { searchTerm, genre, publicationYear } = useAppSelector(
+    (state) => state.filters
+  );
 
   const { isLoading, isError, error, data } = useGetBooksQuery({
-    page: page,
+    page,
     limit: 6,
-    searchTerm: "novel",
+    searchTerm,
+    genre,
+    publicationYear,
   });
 
   const increaseHandler = () => {
@@ -83,7 +89,7 @@ const AllBooks = () => {
           {content}
         </div>
       </div>
-      {data?.success && (
+      {data?.success && data?.data?.length > 0 && (
         <div className="mt-16 flex justify-end">
           <Pagination
             page={page}

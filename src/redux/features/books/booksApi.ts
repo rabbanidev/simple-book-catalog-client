@@ -9,14 +9,24 @@ const booksApi = apiSlice.injectEndpoints({
         page,
         limit,
         searchTerm,
+        genre,
+        publicationYear,
       }: {
         page: string;
         limit: number;
         searchTerm: string;
+        genre: string;
+        publicationYear: number;
       }) => {
         let url = `/books?page=${page}&limit=${limit}`;
         if (searchTerm) {
           url += `&searchTerm=${searchTerm}`;
+        }
+        if (genre) {
+          url += `&genre=${genre}`;
+        }
+        if (publicationYear) {
+          url += `&publicationYear=${publicationYear}`;
         }
 
         return {

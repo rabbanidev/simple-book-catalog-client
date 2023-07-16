@@ -10,6 +10,8 @@ type IProps = {
 };
 
 const BookCard = ({ book }: IProps) => {
+  const year = new Date(book.publicationDate).getFullYear();
+
   return (
     <Link to="/book/details">
       <div className="min-h-[230px] block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
@@ -20,7 +22,7 @@ const BookCard = ({ book }: IProps) => {
         <p className="font-normal text-gray-700 capitalize">
           Genre: {book.genre}
         </p>
-        <p className="font-normal text-gray-700">Publication year: 2023</p>
+        <p className="font-normal text-gray-700">Publication year: {year}</p>
       </div>
     </Link>
   );

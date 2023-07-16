@@ -1,11 +1,32 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import Select from "./ui/Select";
+import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import {
+  filterReset,
+  setGenre,
+  setPublicationYear,
+} from "../redux/features/filters/filtersSlice";
+import {
+  useGetBooksOptionsQuery,
+  useGetYearOptionsQuery,
+} from "../redux/features/filters/filtersApi";
 
 const BooksFilter = () => {
-  const [genre, setGenre] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const { data } = useGetBooksOptionsQuery(undefined);
+  const { data: years } = useGetYearOptionsQuery(undefined);
+  const { genre, publicationYear } = useAppSelector((state) => state.filters);
 
   const filterByGenreHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    setGenre(e.target.value);
+    dispatch(setGenre(e.target.value));
+  };
+
+  const filterByYearHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setPublicationYear(Number(e.target.value)));
+  };
+
+  const resetHandler = () => {
+    dispatch(filterReset());
   };
 
   return (
@@ -19,29 +40,34 @@ const BooksFilter = () => {
         </label>
         <Select
           name="genre"
-          value={genre}
-          options={["a", "b", "c"]}
+          value={genre || ""}
+          options={data?.data || []}
           onChange={filterByGenreHandler}
         />
       </div>
-      {/* <div className="mt-4">
+      <div className="mt-4">
         <label
-          htmlFor="countries"
+          htmlFor="publicationYear"
           className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
         >
           Filter by publication year
         </label>
-        <select
-          id="countries"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+        <Select
+          name="publicationYear"
+          value={publicationYear || ""}
+          options={years?.data || []}
+          onChange={filterByYearHandler}
+        />
+      </div>
+      <div className="mt-5">
+        <button
+          type="button"
+          className="block rounded w-full text-white text-center bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium  text-sm px-8 py-2"
+          onClick={resetHandler}
         >
-          <option selected>Choose a country</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
-        </select>
-      </div> */}
+          Reset
+        </button>
+      </div>
     </div>
   );
 };
