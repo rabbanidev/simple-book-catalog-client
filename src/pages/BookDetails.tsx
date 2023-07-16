@@ -1,9 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import Review from "../components/Review";
 import Layout from "../layouts/Layout";
 import Error from "../components/ui/Error";
 import BookDetailsLoader from "../components/ui/loader/BookDetailsLoader";
-import { useGetBookQuery } from "../redux/features/books/booksApi";
+import {
+  useDeleteBookMutation,
+  useGetBookQuery,
+} from "../redux/features/books/booksApi";
 import { useAppSelector } from "../redux/app/hooks";
 import EditButton from "../components/ui/EditButton";
 import DeleteButton from "../components/ui/DeleteButton";
@@ -11,8 +16,21 @@ import errorHandler from "../utils/errorHandler";
 
 const BookDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
   const { isLoading, isError, error, data } = useGetBookQuery(id as string);
+  const [deleteBook, { isSuccess, data: deleteData }] = useDeleteBookMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(deleteData?.message);
+      navigate("/");
+    }
+  }, [deleteData?.message, isSuccess, navigate]);
+
+  const deleteHandler = (id: string) => {
+    deleteBook(id);
+  };
 
   // Decide what to render
   let content = null;
@@ -53,8 +71,8 @@ const BookDetails = () => {
           </p>
           {user.id === productUser?.id && (
             <div className="mt-4 flex gap-x-3">
-              <EditButton path="" />
-              <DeleteButton />
+              <EditButton path={`/books/edit/${id}`} />
+              <DeleteButton handler={() => deleteHandler(id as string)} />
             </div>
           )}
         </div>

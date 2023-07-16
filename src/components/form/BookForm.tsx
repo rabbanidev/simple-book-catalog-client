@@ -20,7 +20,7 @@ interface IProps {
   defaultValues: IBook;
   isLoading: boolean;
   isSuccess: boolean;
-  createHandler: (book: IBook) => void;
+  handler: (book: IBook) => void;
 }
 
 const schema = yup
@@ -37,7 +37,7 @@ const BookForm = ({
   defaultValues,
   isLoading,
   isSuccess,
-  createHandler,
+  handler,
 }: IProps) => {
   const {
     register,
@@ -64,7 +64,7 @@ const BookForm = ({
       genre: data.genre,
       publicationDate: data.publicationDate,
     };
-    createHandler(bookPayload);
+    handler(bookPayload);
   };
 
   return (

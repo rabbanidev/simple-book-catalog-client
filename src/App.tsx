@@ -6,6 +6,7 @@ import AllBooks from "./pages/AllBooks";
 import BookDetails from "./pages/BookDetails";
 import AddBook from "./pages/AddBook";
 import useAuthCheck from "./hooks/useAuthCheck";
+import EditBook from "./pages/EditBook";
 
 function App() {
   const authCheck = useAuthCheck();
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/books/add-book" element={<AddBook />} />
+        <Route path="/books/edit/:id" element={<EditBook />} />
         <Route path="/books/:id" element={<BookDetails />} />
 
         <Route path="/books" element={<AllBooks />} />

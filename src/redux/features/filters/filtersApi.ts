@@ -7,11 +7,13 @@ const filtersAPi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/filters/books/genres",
       }),
+      providesTags: ["genreOptions"],
     }),
     getYearOptions: builder.query<IResponse<number[]>, undefined>({
       query: () => ({
         url: "/filters/books/years",
       }),
+      providesTags: ["publicationYears"],
     }),
   }),
 });

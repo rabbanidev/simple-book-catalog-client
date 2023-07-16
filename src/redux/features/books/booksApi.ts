@@ -27,7 +27,7 @@ const booksApi = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `/books/${id}`,
       }),
-      providesTags: (_result, _error, arg) => [{ type: "books", id: arg }],
+      providesTags: (result, error, arg) => [{ type: "books", id: arg }],
     }),
     createBook: builder.mutation<IResponse<IBook>, object>({
       query: (data) => ({
@@ -35,7 +35,7 @@ const booksApi = apiSlice.injectEndpoints({
         body: data,
         method: "POST",
       }),
-      invalidatesTags: ["books"],
+      invalidatesTags: ["books", "publicationYears", "genreOptions"],
     }),
     editBook: builder.mutation<
       IResponse<IBook>,
@@ -46,13 +46,28 @@ const booksApi = apiSlice.injectEndpoints({
         body: data,
         method: "PATCH",
       }),
-      invalidatesTags: (_undeifined, _error, arg) => [
+      invalidatesTags: (result, error, arg) => [
+        "books",
+        "publicationYears",
+        "genreOptions",
         { type: "books", id: arg.id },
       ],
+    }),
+    deleteBook: builder.mutation({
+      query: (bookId) => ({
+        url: `/books/${bookId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["books", "publicationYears", "genreOptions"],
     }),
   }),
 });
 
-export const { useGetBooksQuery, useGetBookQuery, useCreateBookMutation } =
-  booksApi;
+export const {
+  useGetBooksQuery,
+  useGetBookQuery,
+  useCreateBookMutation,
+  useEditBookMutation,
+  useDeleteBookMutation,
+} = booksApi;
 export default booksApi;
