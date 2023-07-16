@@ -4,6 +4,10 @@ export type IBook = {
   author: string;
   genre: string;
   publicationDate: Date;
+  user: {
+    id: string;
+    email: string;
+  };
 };
 
 export type IBooksGetUrlPayload = {

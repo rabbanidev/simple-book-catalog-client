@@ -1,9 +1,9 @@
 import { IResponse } from "../../../interface/generic";
 import apiSlice from "../api/apiSlice";
-import { IAuthResponse } from "./authInterface";
-import { userLoggedIn } from "./authSlice";
+import { IAuthResponse, IMyProfile } from "./authInterface";
+import { myProfile, userLoggedIn } from "./authSlice";
 
-const authAPi = apiSlice.injectEndpoints({
+const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<IResponse<IAuthResponse>, object>({
       query: (data) => ({
@@ -37,8 +37,22 @@ const authAPi = apiSlice.injectEndpoints({
         }
       },
     }),
+    myProfile: builder.query<IResponse<IMyProfile>, undefined>({
+      query: () => ({
+        url: "/users/my-profile",
+      }),
+      async onQueryStarted(_undeifined, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(myProfile(data?.data));
+        } catch (error) {
+          console.log("Login error", error);
+        }
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authAPi;
-export default authAPi;
+export const { useLoginMutation, useSignupMutation, useMyProfileQuery } =
+  authApi;
+export default authApi;

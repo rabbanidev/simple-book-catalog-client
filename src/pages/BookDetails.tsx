@@ -4,9 +4,13 @@ import Layout from "../layouts/Layout";
 import Error from "../components/ui/Error";
 import BookDetailsLoader from "../components/ui/loader/BookDetailsLoader";
 import { useGetBookQuery } from "../redux/features/books/booksApi";
+import { useAppSelector } from "../redux/app/hooks";
+import EditButton from "../components/ui/EditButton";
+import DeleteButton from "../components/ui/DeleteButton";
 
 const BookDetails = () => {
   const { id } = useParams();
+  const { user } = useAppSelector((state) => state.auth);
   const { isLoading, isError, error, data } = useGetBookQuery(id as string);
 
   // Decide what to render
@@ -20,7 +24,13 @@ const BookDetails = () => {
       </div>
     );
   } else if (!isLoading && !isError && data?.data) {
-    const { author, title, genre, publicationDate } = data.data;
+    const {
+      author,
+      title,
+      genre,
+      publicationDate,
+      user: productUser,
+    } = data.data;
     const year = new Date(publicationDate).getFullYear();
     content = (
       <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">
@@ -40,6 +50,12 @@ const BookDetails = () => {
             <span className="font-semibold">Publication year: </span>
             {year}
           </p>
+          {user.id === productUser.id && (
+            <div className="mt-4 flex gap-x-3">
+              <EditButton path="" />
+              <DeleteButton />
+            </div>
+          )}
         </div>
         <div className="col-span-1">
           <Review />
