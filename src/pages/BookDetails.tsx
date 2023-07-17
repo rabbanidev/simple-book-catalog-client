@@ -52,6 +52,7 @@ const BookDetails = () => {
       publicationDate,
       user: productUser,
     } = data.data;
+
     const year = new Date(publicationDate).getFullYear();
     content = (
       <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">

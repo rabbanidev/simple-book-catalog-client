@@ -16,7 +16,7 @@ const authSlice = createSlice({
     userLoggedIn: (state, action: PayloadAction<IAuthResponse>) => {
       state.user.accessToken = action.payload?.accessToken as string;
     },
-    myProfile: (state, action: PayloadAction<IUser>) => {
+    setMyProfile: (state, action: PayloadAction<IUser>) => {
       state.user.id = action.payload?.id as string;
     },
     userLoggedOut: (state) => {
@@ -26,6 +26,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { userLoggedIn, userLoggedOut, myProfile } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut, setMyProfile } = authSlice.actions;
 
 export default authSlice.reducer;

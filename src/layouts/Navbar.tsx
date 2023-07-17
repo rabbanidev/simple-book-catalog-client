@@ -40,6 +40,22 @@ const Navbar = () => {
                 All Books
               </Link>
             </li>
+            <li>
+              <Link
+                to="/wishlist"
+                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+              >
+                Wishlist (0)
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/reading-list"
+                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+              >
+                Reading List (0)
+              </Link>
+            </li>
             {user.accessToken && (
               <li>
                 <button
