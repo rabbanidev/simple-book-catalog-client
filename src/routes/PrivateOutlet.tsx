@@ -10,7 +10,7 @@ const PrivateOutlet = () => {
   if (isAccess) {
     return <Outlet />;
   } else {
-    return <Navigate to="/signin" state={{ from: location }} />;
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 };
 
