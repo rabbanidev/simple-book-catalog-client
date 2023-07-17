@@ -13,7 +13,7 @@ type IProps = {
 
 const ReadingListCard = ({ readingItem }: IProps) => {
   const [deleteReadingListItem] = useDeleteReadingListItemMutation();
-  const [finishedReadingList] = useFinishedReadingListMutation();
+  const [finishedReadingList, { isLoading }] = useFinishedReadingListMutation();
   const { book, id, finshedReading } = readingItem;
 
   const year = new Date(book.publicationDate).getFullYear();
@@ -63,8 +63,9 @@ const ReadingListCard = ({ readingItem }: IProps) => {
           type="button"
           className="mt-4 block rounded w-full text-white text-center bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium  text-sm px-8 py-2"
           onClick={() => finishedReadingHandler(id as string)}
+          disabled={isLoading}
         >
-          Finished Reading
+          {isLoading ? "Loading..." : "Finished Reading"}
         </button>
       )}
     </div>

@@ -2,10 +2,19 @@ import { Link } from "react-router-dom";
 import Menu from "../icon/Menu";
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import { userLoggedOut } from "../redux/features/auth/authSlice";
+import { useGetWishListQuery } from "../redux/features/wishlist/wishlistApi";
+import { useGetReadingListQuery } from "../redux/features/readingList/readingListApi";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+
+  const { data: wishList } = useGetWishListQuery(undefined, {
+    skip: !user.accessToken,
+  });
+  const { data: readingList } = useGetReadingListQuery(undefined, {
+    skip: !user.accessToken,
+  });
 
   const logoutHandler = () => {
     localStorage.removeItem("auth");
@@ -45,7 +54,7 @@ const Navbar = () => {
                 to="/wishlist"
                 className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
               >
-                Wishlist (0)
+                Wishlist ({wishList?.data?.length || 0})
               </Link>
             </li>
             <li>
@@ -53,7 +62,7 @@ const Navbar = () => {
                 to="/reading-list"
                 className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
               >
-                Reading List (0)
+                Reading List ({readingList?.data?.length || 0})
               </Link>
             </li>
             {user.accessToken && (

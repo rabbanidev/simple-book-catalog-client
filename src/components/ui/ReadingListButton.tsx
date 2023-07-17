@@ -25,7 +25,7 @@ const ReadingListButton = ({ id }: Iprops) => {
         onClick={wishlistHandler}
         disabled={isLoading}
       >
-        Add To Reading List
+        {isLoading ? "Loading..." : "Add To Reading List"}
       </button>
       {isError && <Error message={errorHandler(error)} />}
     </div>

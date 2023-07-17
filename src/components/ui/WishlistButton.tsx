@@ -24,7 +24,7 @@ const WishlistButton = ({ id }: Iprops) => {
         onClick={wishlistHandler}
         disabled={isLoading}
       >
-        Add To Wishlist
+        {isLoading ? "Loading..." : "  Add To Wishlist"}
       </button>
       {isError && <Error message={errorHandler(error)} />}
     </div>
