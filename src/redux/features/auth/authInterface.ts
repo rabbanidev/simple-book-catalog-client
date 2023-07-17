@@ -1,7 +1,6 @@
 export type IAuth = {
   user: {
     accessToken: string | null;
-    id: string | null;
   };
 };
 

@@ -15,12 +15,16 @@ import DeleteButton from "../components/ui/DeleteButton";
 import errorHandler from "../utils/errorHandler";
 import WishlistButton from "../components/ui/WishlistButton";
 import ReadingListButton from "../components/ui/ReadingListButton";
+import { useMyProfileQuery } from "../redux/features/auth/authApi";
 
 const BookDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
   const { isLoading, isError, error, data } = useGetBookQuery(id as string);
+  const { data: myProfile } = useMyProfileQuery(undefined, {
+    skip: !user.accessToken,
+  });
   const [deleteBook, { isSuccess, data: deleteData }] = useDeleteBookMutation();
 
   useEffect(() => {
@@ -72,7 +76,7 @@ const BookDetails = () => {
             <span className="font-semibold">Publication year: </span>
             {year}
           </p>
-          {user.id === productUser?.id && (
+          {myProfile?.data?.id === productUser?.id && (
             <div className="mt-4 flex gap-x-3">
               <EditButton path={`/books/edit/${id}`} />
               <DeleteButton handler={() => deleteHandler(id as string)} />

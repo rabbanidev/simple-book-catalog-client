@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import { useAppDispatch } from "../redux/app/hooks";
 import { userLoggedIn } from "../redux/features/auth/authSlice";
-import { useMyProfileQuery } from "../redux/features/auth/authApi";
 
 const useAuthCheck = () => {
   const dispatch = useAppDispatch();
   const [authChecked, setAuthChecked] = useState(false);
-  const { user } = useAppSelector((state) => state.auth);
-  const [skip, setSkip] = useState(true);
-
-  useMyProfileQuery(undefined, {
-    skip: skip,
-  });
 
   useEffect(() => {
     const localAuth = localStorage.getItem("auth");
@@ -21,13 +14,6 @@ const useAuthCheck = () => {
     }
     setAuthChecked(true);
   }, [dispatch]);
-
-  useEffect(() => {
-    if (authChecked && user.accessToken) {
-      setSkip(false);
-      // dispatch(authApi.endpoints.myProfile.initiate(undefined));
-    }
-  }, [authChecked, dispatch, user.accessToken]);
 
   return authChecked;
 };

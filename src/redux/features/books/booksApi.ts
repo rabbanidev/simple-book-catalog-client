@@ -27,7 +27,7 @@ const booksApi = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `/books/${id}`,
       }),
-      providesTags: (result, error, arg) => [{ type: "books", id: arg }],
+      providesTags: (_result, _error, arg) => [{ type: "books", id: arg }],
     }),
     createBook: builder.mutation<IResponse<IBook>, object>({
       query: (data) => ({
@@ -46,7 +46,7 @@ const booksApi = apiSlice.injectEndpoints({
         body: data,
         method: "PATCH",
       }),
-      invalidatesTags: (result, error, arg) => [
+      invalidatesTags: (_result, _error, arg) => [
         "books",
         "publicationYears",
         "genreOptions",

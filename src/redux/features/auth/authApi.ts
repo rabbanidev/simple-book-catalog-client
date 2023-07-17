@@ -1,7 +1,7 @@
 import { IResponse } from "../../../interface/generic";
 import apiSlice from "../api/apiSlice";
 import { IAuthResponse, IUser } from "./authInterface";
-import { setMyProfile, userLoggedIn } from "./authSlice";
+import { userLoggedIn } from "./authSlice";
 
 const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -41,14 +41,6 @@ const authApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/users/my-profile",
       }),
-      async onQueryStarted(_undeifined, { dispatch, queryFulfilled }) {
-        try {
-          const { data: myProfile } = await queryFulfilled;
-          dispatch(setMyProfile(myProfile.data));
-        } catch (error) {
-          console.log("Get My profile error", error);
-        }
-      },
     }),
   }),
 });
