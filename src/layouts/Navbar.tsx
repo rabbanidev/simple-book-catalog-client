@@ -66,15 +66,26 @@ const Navbar = () => {
               </Link>
             </li>
             {user.accessToken && (
-              <li>
-                <button
-                  type="button"
-                  className="mt-2 block w-full rounded text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium  text-sm px-8 py-2 md:mt-0 md:rounded-full"
-                  onClick={logoutHandler}
-                >
-                  Sign Out
-                </button>
-              </li>
+              <>
+                <li>
+                  <Link
+                    to="/books/add-new-book"
+                    type="button"
+                    className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+                  >
+                    Add New Book
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    className="mt-2 block w-full rounded text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium  text-sm px-8 py-2 md:mt-0 md:rounded-full"
+                    onClick={logoutHandler}
+                  >
+                    Sign Out
+                  </button>
+                </li>
+              </>
             )}
             {!user.accessToken && (
               <li>

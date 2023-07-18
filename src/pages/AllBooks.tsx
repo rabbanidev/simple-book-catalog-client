@@ -83,7 +83,7 @@ const AllBooks = () => {
             {user.accessToken && (
               <div className="mt-4 md:mt-0">
                 <Link
-                  to="/books/add-book"
+                  to="/books/add-new-book"
                   className="block rounded text-white text-center bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium  text-sm px-8 py-2 md:mt-0 md:rounded-full"
                 >
                   Add New Book

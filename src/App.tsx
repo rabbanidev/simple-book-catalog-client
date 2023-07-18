@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<PrivateOutlet />}>
           <Route path="wishlist" element={<WishList />} />
           <Route path="reading-list" element={<ReadingList />} />
-          <Route path="books/add-book" element={<AddBook />} />
+          <Route path="books/add-new-book" element={<AddBook />} />
           <Route path="books/edit/:id" element={<EditBook />} />
         </Route>
 

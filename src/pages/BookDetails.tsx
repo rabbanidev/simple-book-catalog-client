@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Review from "../components/Review";
 import Layout from "../layouts/Layout";
@@ -21,9 +21,12 @@ const BookDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
+
   const { isLoading, isError, error, data } = useGetBookQuery(id as string);
+
   const { data: myProfile } = useMyProfileQuery(undefined, {
     skip: !user.accessToken,
+    refetchOnMountOrArgChange: id ? true : false,
   });
   const [deleteBook, { isSuccess, data: deleteData }] = useDeleteBookMutation();
 
@@ -32,7 +35,7 @@ const BookDetails = () => {
       toast.success(deleteData?.message);
       navigate("/");
     }
-  }, [deleteData?.message, isSuccess, navigate]);
+  }, [deleteData?.message, id, isSuccess, navigate]);
 
   const deleteHandler = (id: string) => {
     deleteBook(id);
